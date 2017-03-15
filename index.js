@@ -27,31 +27,28 @@ app.use(bodyParser.json()) //para permitir peticiones en formato json
 
 //********************************************SERVICIOS****************************************
 
-app.post('/SISCOM/roles', (req, res)=> {
+app.post('/SISCOM/motivos', (req, res)=> {
 
 	// para poder ver el cuerpo de la peticion
 	console.log(req.body)
-	let newRoles = Roles(req.body);
-	newRoles.save(function(error,createdRoles){
+	let newMotivo = Motivos(req.body);
+	newMotivo.save(function(error,createdMotivo){
 		if (error) throw error;
-		if (createdRoles){
-			return res.status(200).json({message: 'EL rol se ha recibido',
-				createdRoles:createdRoles});
+		if (createdMotivo){
+			return res.status(200).json({message: 'EL motivo se ha recibido',
+				createdMotivo:createdMotivo});
 		}
 		return res.status(500).json({message: 'Error desconocido'});
 	})
 })
 
 
+// TIPO GET, PARA QUE MUESTRE LOS MOTIVOS
 
-
-
-// TIPO GET, PARA QUE MUESTRE LOS SERVICIOS
-
-app.get('/SISCOM/roles', (req, res) => {
-	Roles.find({},function(error,roles){
+app.get('/SISCOM/motivos', (req, res) => {
+	Motivos.find({},function(error,motivos){
 		if (error) throw error;	
-		return res.status(200).json(roles)
+		return res.status(200).json(motivos)
 
 	})
 	
@@ -61,10 +58,10 @@ app.get('/SISCOM/roles', (req, res) => {
 
 
 // GET PARA UNO ESPECIFICO POR ID
-app.get('/SISCOM/roles/:rolesId', (req, res)=> {
-	Roles.findById(req.params.rolesId, function(error,roles){
+app.get('/SISCOM/motivos/:motivoId', (req, res)=> {
+	Motivos.findById(req.params.motivoId, function(error,motivos){
 		if (error) throw error;	
-		return res.status(200).json(roles)
+		return res.status(200).json(motivos)
 })
 
 })
@@ -73,14 +70,15 @@ app.get('/SISCOM/roles/:rolesId', (req, res)=> {
 // TIPO PUT, 'use strict'
 // modelo para guardar los productos en mongo
 
-app.put('/SISCOM/roles/:rolesId', (req, res)=> {
+
+app.put('/SISCOM/motivos/:motivoId', (req, res)=> {
 
 	console.log(req.body)
-	Roles.findOneAndUpdate({_id:req.params.rolesId},{$set:req.body},{new:true},function(error,updatedRoles){
+	Motivos.findOneAndUpdate({_id:req.params.motivoId},{$set:req.body},{new:true},function(error,updatedMotivo){
 		if (error) throw error;
-		if (updatedRoles){
-			return res.status(201).json({message: 'El rol se ha actualizado',
-				updatedRoles:updatedRoles});
+		if (updatedMotivo){
+			return res.status(201).json({message: 'El motivo se ha actualizado',
+				updatedMotivo:updatedMotivo});
 		}
 		return res.status(500).json({message: 'Error desconocido'});
 	})
@@ -90,17 +88,16 @@ app.put('/SISCOM/roles/:rolesId', (req, res)=> {
 
 // TIPO DELETE
 
-app.delete('/SISCOM/roles/:rolesId', (req, res) => {
+app.delete('/SISCOM/motivos/:motivoId', (req, res) => {
 
-	Roles.find({_id:req.params.rolesId}).remove().exec(function(error,data){
+	Motivos.find({_id:req.params.motivoId}).remove().exec(function(error,data){
 		if (error) throw error;
-		return res.status(200).json({message: 'El roles se ha eliminado',
+		return res.status(200).json({message: 'El motivo se ha eliminado',
 			data:data});
 	
 			return res.status(500).json({message: 'Error desconocido'});
 	})
 })
-
 
 app.listen(port,() => {
 console.log(`PROYECTO SISCOM corriendo en http://localhost:${port}`)
