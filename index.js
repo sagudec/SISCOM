@@ -27,16 +27,16 @@ app.use(bodyParser.json()) //para permitir peticiones en formato json
 
 //********************************************SERVICIOS****************************************
 
-app.post('/SISCOM/solicitudes', (req, res)=> {
+app.post('/SISCOM/usuarios', (req, res)=> {
 
 	// para poder ver el cuerpo de la peticion
 	console.log(req.body)
-	let newSolicitudes = Solicitudes(req.body);
-	newSolicitudes.save(function(error,createdSolicitudes){
+	let newUsuario = Usuario(req.body);
+	newUsuario.save(function(error,createdusuarios){
 		if (error) throw error;
-		if (createdSolicitudes){
-			return res.status(200).json({message: 'La solicitud se ha recibido',
-				createdSolicitudes:createdSolicitudes});
+		if (createdusuarios){
+			return res.status(200).json({message: 'EL usuario se ha recibido',
+				createdusuarios:createdusuarios});
 		}
 		return res.status(500).json({message: 'Error desconocido'});
 	})
@@ -48,10 +48,10 @@ app.post('/SISCOM/solicitudes', (req, res)=> {
 
 // TIPO GET, PARA QUE MUESTRE LOS SERVICIOS
 
-app.get('/SISCOM/solicitudes', (req, res) => {
-	Solicitudes.find({},function(error,solicitudes){
+app.get('/SISCOM/usuarios', (req, res) => {
+	Usuarios.find({},function(error,usuarios){
 		if (error) throw error;	
-		return res.status(200).json(solicitudes)
+		return res.status(200).json(usuarios)
 
 	})
 	
@@ -61,10 +61,10 @@ app.get('/SISCOM/solicitudes', (req, res) => {
 
 
 // GET PARA UNO ESPECIFICO POR ID
-app.get('/SISCOM/solicitudes/:solicitudesId', (req, res)=> {
-	Solicitudes.findById(req.params.solicitudesId, function(error,solicitudes){
+app.get('/SISCOM/usuarios/:usuariosId', (req, res)=> {
+	Usuarios.findById(req.params.usuariosId, function(error,usuarios){
 		if (error) throw error;	
-		return res.status(200).json(solicitudes)
+		return res.status(200).json(usuarios)
 })
 
 })
@@ -73,14 +73,14 @@ app.get('/SISCOM/solicitudes/:solicitudesId', (req, res)=> {
 // TIPO PUT, 'use strict'
 // modelo para guardar los productos en mongo
 
-app.put('/SISCOM/solicitudes/:solicitudesId', (req, res)=> {
+app.put('/SISCOM/usuarios/:usuariosId', (req, res)=> {
 
 	console.log(req.body)
-	Solicitudes.findOneAndUpdate({_id:req.params.solicitudesId},{$set:req.body},{new:true},function(error,updatedSolicitudes){
+	Usuarios.findOneAndUpdate({_id:req.params.usuariosId},{$set:req.body},{new:true},function(error,updatedUsuarios){
 		if (error) throw error;
-		if (updatedSolicitudes){
-			return res.status(201).json({message: 'la solicitud se ha actualizado',
-				updatedSolicitudes:updatedSolicitudes});
+		if (updatedUsuarios){
+			return res.status(201).json({message: 'El usuario se ha actualizado',
+				updatedUsuarios:updatedUsuarios});
 		}
 		return res.status(500).json({message: 'Error desconocido'});
 	})
@@ -90,11 +90,11 @@ app.put('/SISCOM/solicitudes/:solicitudesId', (req, res)=> {
 
 // TIPO DELETE
 
-app.delete('/SISCOM/solicitudes/:solicitudesId', (req, res) => {
+app.delete('/SISCOM/usuarios/:usuariosId', (req, res) => {
 
-	Solicitudes.find({_id:req.params.solicitudesId}).remove().exec(function(error,data){
+	Usuarios.find({_id:req.params.usuariosId}).remove().exec(function(error,data){
 		if (error) throw error;
-		return res.status(200).json({message: 'la solicitud se ha eliminado',
+		return res.status(200).json({message: 'El usuario se ha eliminado',
 			data:data});
 	
 			return res.status(500).json({message: 'Error desconocido'});
