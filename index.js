@@ -27,16 +27,16 @@ app.use(bodyParser.json()) //para permitir peticiones en formato json
 
 //********************************************SERVICIOS****************************************
 
-app.post('/SISCOM/servicios', (req, res)=> {
+app.post('/SISCOM/roles', (req, res)=> {
 
 	// para poder ver el cuerpo de la peticion
 	console.log(req.body)
-	let newServicio = Servicios(req.body);
-	newServicio.save(function(error,createdServicio){
+	let newRoles = Roles(req.body);
+	newRoles.save(function(error,createdRoles){
 		if (error) throw error;
-		if (createdServicio){
-			return res.status(200).json({message: 'EL servicio se ha recibido',
-				createdServicio:createdServicio});
+		if (createdRoles){
+			return res.status(200).json({message: 'EL rol se ha recibido',
+				createdRoles:createdRoles});
 		}
 		return res.status(500).json({message: 'Error desconocido'});
 	})
@@ -48,10 +48,10 @@ app.post('/SISCOM/servicios', (req, res)=> {
 
 // TIPO GET, PARA QUE MUESTRE LOS SERVICIOS
 
-app.get('/SISCOM/servicios', (req, res) => {
-	Servicios.find({},function(error,servicios){
+app.get('/SISCOM/roles', (req, res) => {
+	Roles.find({},function(error,roles){
 		if (error) throw error;	
-		return res.status(200).json(servicios)
+		return res.status(200).json(roles)
 
 	})
 	
@@ -61,10 +61,10 @@ app.get('/SISCOM/servicios', (req, res) => {
 
 
 // GET PARA UNO ESPECIFICO POR ID
-app.get('/SISCOM/servicios/:servicioId', (req, res)=> {
-	Servicios.findById(req.params.servicioId, function(error,motivos){
+app.get('/SISCOM/roles/:rolesId', (req, res)=> {
+	Roles.findById(req.params.rolesId, function(error,roles){
 		if (error) throw error;	
-		return res.status(200).json(servicios)
+		return res.status(200).json(roles)
 })
 
 })
@@ -73,14 +73,14 @@ app.get('/SISCOM/servicios/:servicioId', (req, res)=> {
 // TIPO PUT, 'use strict'
 // modelo para guardar los productos en mongo
 
-app.put('/SISCOM/servicios/:servicioId', (req, res)=> {
+app.put('/SISCOM/roles/:rolesId', (req, res)=> {
 
 	console.log(req.body)
-	Servicios.findOneAndUpdate({_id:req.params.servicioId},{$set:req.body},{new:true},function(error,updatedServicio){
+	Roles.findOneAndUpdate({_id:req.params.rolesId},{$set:req.body},{new:true},function(error,updatedRoles){
 		if (error) throw error;
-		if (updatedServicio){
-			return res.status(201).json({message: 'El servicio se ha actualizado',
-				updatedServicio:updatedServicio});
+		if (updatedRoles){
+			return res.status(201).json({message: 'El rol se ha actualizado',
+				updatedRoles:updatedRoles});
 		}
 		return res.status(500).json({message: 'Error desconocido'});
 	})
@@ -90,16 +90,17 @@ app.put('/SISCOM/servicios/:servicioId', (req, res)=> {
 
 // TIPO DELETE
 
-app.delete('/SISCOM/servicios/:servicioId', (req, res) => {
+app.delete('/SISCOM/roles/:rolesId', (req, res) => {
 
-	Servicios.find({_id:req.params.servicioId}).remove().exec(function(error,data){
+	Roles.find({_id:req.params.rolesId}).remove().exec(function(error,data){
 		if (error) throw error;
-		return res.status(200).json({message: 'El servicio se ha eliminado',
+		return res.status(200).json({message: 'El roles se ha eliminado',
 			data:data});
 	
 			return res.status(500).json({message: 'Error desconocido'});
 	})
 })
+
 
 app.listen(port,() => {
 console.log(`PROYECTO SISCOM corriendo en http://localhost:${port}`)
