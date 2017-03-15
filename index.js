@@ -27,28 +27,31 @@ app.use(bodyParser.json()) //para permitir peticiones en formato json
 
 //********************************************SERVICIOS****************************************
 
-app.post('/SISCOM/motivos', (req, res)=> {
+app.post('/SISCOM/estados', (req, res)=> {
 
 	// para poder ver el cuerpo de la peticion
 	console.log(req.body)
-	let newMotivo = Motivos(req.body);
-	newMotivo.save(function(error,createdMotivo){
+	let newEstado = Estado(req.body);
+	newEstado.save(function(error,createdEstados){
 		if (error) throw error;
-		if (createdMotivo){
-			return res.status(200).json({message: 'EL motivo se ha recibido',
-				createdMotivo:createdMotivo});
+		if (createdEstados){
+			return res.status(200).json({message: 'EL estado se ha recibido',
+				createdEstados:createdEstados});
 		}
 		return res.status(500).json({message: 'Error desconocido'});
 	})
 })
 
 
-// TIPO GET, PARA QUE MUESTRE LOS MOTIVOS
 
-app.get('/SISCOM/motivos', (req, res) => {
-	Motivos.find({},function(error,motivos){
+
+
+// TIPO GET, PARA QUE MUESTRE LOS SERVICIOS
+
+app.get('/SISCOM/estados', (req, res) => {
+	Estado.find({},function(error,estados){
 		if (error) throw error;	
-		return res.status(200).json(motivos)
+		return res.status(200).json(estados)
 
 	})
 	
@@ -58,10 +61,10 @@ app.get('/SISCOM/motivos', (req, res) => {
 
 
 // GET PARA UNO ESPECIFICO POR ID
-app.get('/SISCOM/motivos/:motivoId', (req, res)=> {
-	Motivos.findById(req.params.motivoId, function(error,motivos){
+app.get('/SISCOM/estados/:estadosId', (req, res)=> {
+	Estado.findById(req.params.estadosId, function(error,estados){
 		if (error) throw error;	
-		return res.status(200).json(motivos)
+		return res.status(200).json(estados)
 })
 
 })
@@ -70,15 +73,14 @@ app.get('/SISCOM/motivos/:motivoId', (req, res)=> {
 // TIPO PUT, 'use strict'
 // modelo para guardar los productos en mongo
 
-
-app.put('/SISCOM/motivos/:motivoId', (req, res)=> {
+app.put('/SISCOM/estados/:estadosId', (req, res)=> {
 
 	console.log(req.body)
-	Motivos.findOneAndUpdate({_id:req.params.motivoId},{$set:req.body},{new:true},function(error,updatedMotivo){
+	Estado.findOneAndUpdate({_id:req.params.estadosId},{$set:req.body},{new:true},function(error,updatedEstados){
 		if (error) throw error;
-		if (updatedMotivo){
-			return res.status(201).json({message: 'El motivo se ha actualizado',
-				updatedMotivo:updatedMotivo});
+		if (updatedEstados){
+			return res.status(201).json({message: 'El estado se ha actualizado',
+				updatedEstados:updatedEstados});
 		}
 		return res.status(500).json({message: 'Error desconocido'});
 	})
@@ -88,11 +90,11 @@ app.put('/SISCOM/motivos/:motivoId', (req, res)=> {
 
 // TIPO DELETE
 
-app.delete('/SISCOM/motivos/:motivoId', (req, res) => {
+app.delete('/SISCOM/estados/:estadosId', (req, res) => {
 
-	Motivos.find({_id:req.params.motivoId}).remove().exec(function(error,data){
+	Estado.find({_id:req.params.estadosId}).remove().exec(function(error,data){
 		if (error) throw error;
-		return res.status(200).json({message: 'El motivo se ha eliminado',
+		return res.status(200).json({message: 'El estado se ha eliminado',
 			data:data});
 	
 			return res.status(500).json({message: 'Error desconocido'});
