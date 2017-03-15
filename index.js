@@ -27,16 +27,16 @@ app.use(bodyParser.json()) //para permitir peticiones en formato json
 
 //********************************************SERVICIOS****************************************
 
-app.post('/SISCOM/estados', (req, res)=> {
+app.post('/SISCOM/solicitudes', (req, res)=> {
 
 	// para poder ver el cuerpo de la peticion
 	console.log(req.body)
-	let newEstado = Estado(req.body);
-	newEstado.save(function(error,createdEstados){
+	let newSolicitudes = Solicitudes(req.body);
+	newSolicitudes.save(function(error,createdSolicitudes){
 		if (error) throw error;
-		if (createdEstados){
-			return res.status(200).json({message: 'EL estado se ha recibido',
-				createdEstados:createdEstados});
+		if (createdSolicitudes){
+			return res.status(200).json({message: 'La solicitud se ha recibido',
+				createdSolicitudes:createdSolicitudes});
 		}
 		return res.status(500).json({message: 'Error desconocido'});
 	})
@@ -48,10 +48,10 @@ app.post('/SISCOM/estados', (req, res)=> {
 
 // TIPO GET, PARA QUE MUESTRE LOS SERVICIOS
 
-app.get('/SISCOM/estados', (req, res) => {
-	Estado.find({},function(error,estados){
+app.get('/SISCOM/solicitudes', (req, res) => {
+	Solicitudes.find({},function(error,solicitudes){
 		if (error) throw error;	
-		return res.status(200).json(estados)
+		return res.status(200).json(solicitudes)
 
 	})
 	
@@ -61,10 +61,10 @@ app.get('/SISCOM/estados', (req, res) => {
 
 
 // GET PARA UNO ESPECIFICO POR ID
-app.get('/SISCOM/estados/:estadosId', (req, res)=> {
-	Estado.findById(req.params.estadosId, function(error,estados){
+app.get('/SISCOM/solicitudes/:solicitudesId', (req, res)=> {
+	Solicitudes.findById(req.params.solicitudesId, function(error,solicitudes){
 		if (error) throw error;	
-		return res.status(200).json(estados)
+		return res.status(200).json(solicitudes)
 })
 
 })
@@ -73,14 +73,14 @@ app.get('/SISCOM/estados/:estadosId', (req, res)=> {
 // TIPO PUT, 'use strict'
 // modelo para guardar los productos en mongo
 
-app.put('/SISCOM/estados/:estadosId', (req, res)=> {
+app.put('/SISCOM/solicitudes/:solicitudesId', (req, res)=> {
 
 	console.log(req.body)
-	Estado.findOneAndUpdate({_id:req.params.estadosId},{$set:req.body},{new:true},function(error,updatedEstados){
+	Solicitudes.findOneAndUpdate({_id:req.params.solicitudesId},{$set:req.body},{new:true},function(error,updatedSolicitudes){
 		if (error) throw error;
-		if (updatedEstados){
-			return res.status(201).json({message: 'El estado se ha actualizado',
-				updatedEstados:updatedEstados});
+		if (updatedSolicitudes){
+			return res.status(201).json({message: 'la solicitud se ha actualizado',
+				updatedSolicitudes:updatedSolicitudes});
 		}
 		return res.status(500).json({message: 'Error desconocido'});
 	})
@@ -90,11 +90,11 @@ app.put('/SISCOM/estados/:estadosId', (req, res)=> {
 
 // TIPO DELETE
 
-app.delete('/SISCOM/estados/:estadosId', (req, res) => {
+app.delete('/SISCOM/solicitudes/:solicitudesId', (req, res) => {
 
-	Estado.find({_id:req.params.estadosId}).remove().exec(function(error,data){
+	Solicitudes.find({_id:req.params.solicitudesId}).remove().exec(function(error,data){
 		if (error) throw error;
-		return res.status(200).json({message: 'El estado se ha eliminado',
+		return res.status(200).json({message: 'la solicitud se ha eliminado',
 			data:data});
 	
 			return res.status(500).json({message: 'Error desconocido'});
