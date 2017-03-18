@@ -101,6 +101,9 @@ app.delete('/SISCOM/solicitudes/:solicitudesId', (req, res) => {
 	})
 })
 
+app.use('/swagger', express.static('swagger'));
+
+
 app.listen(port,() => {
 console.log(`PROYECTO SISCOM corriendo en http://localhost:${port}`)
 

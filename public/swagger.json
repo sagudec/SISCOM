@@ -1,0 +1,47 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "1.0.1",
+		"tittle": "API SISCOM"
+	},
+	"host": "localhost:3000",
+	"basePath": "/",
+	"schema": [
+		"http"
+	],
+	"consumes": [
+		"application/json"
+	],
+	"produces": [
+		"application/json"
+	],
+	"paths": {
+		"/Usuarios": {
+			"get": {
+				"description": "Visualizar los usuarios del sistema",
+				"summary": "obtener usuarios",
+				"operationId": "obtener usuario con id",
+				"parameters": [
+					{
+						"name": "nombre_rol",
+						"in": "query",
+						"description": "cargo que desempeña el usuario",
+						"type": "String"
+					},
+					{
+						"name": "email",
+						"in": "query",
+						"description": "correo electronico del usuario",
+						"type": "String"
+					},
+					{
+						"name": "password",
+						"in": "query",
+						"description": "contraseña del usuario",
+						"type": "String"
+					}
+				]
+			}
+		}
+	}
+}
